@@ -1,0 +1,12 @@
+git status
+git add .
+git commit -m "Initial commit: URL shortener core with MySQL and Swagger"
+
+git branch -M main
+git remote add origin https://github.com/ersujalsharma/url-shortener.git
+
+git remote -v
+
+git push -u origin main
+
+git checkout -b redis-cache
