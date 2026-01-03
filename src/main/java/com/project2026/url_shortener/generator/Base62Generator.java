@@ -16,6 +16,10 @@ public class Base62Generator {
         long id = counter.incrementAndGet();
         return encode(id);
     }
+    
+    public String generate(long id) {
+		return encode(id);
+	}
 
     private String encode(long id) {
         StringBuilder sb = new StringBuilder();

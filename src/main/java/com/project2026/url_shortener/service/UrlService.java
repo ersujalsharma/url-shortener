@@ -4,6 +4,7 @@ import java.time.Duration;
 import org.springframework.stereotype.Service;
 
 import com.project2026.url_shortener.generator.Base62Generator;
+import com.project2026.url_shortener.generator.RedisIdGenerator;
 import com.project2026.url_shortener.model.UrlMapping;
 import com.project2026.url_shortener.repository.UrlRepository;
 
@@ -14,18 +15,26 @@ import lombok.RequiredArgsConstructor;
 public class UrlService {
 
     private final UrlRepository repository;
+    private final RedisIdGenerator redisIdGenerator;
     private final Base62Generator generator;
     private final CacheService cacheService;
     
     private static final Duration CACHE_TTL = Duration.ofHours(24);
 
     public String shorten(String longUrl) {
-        String shortCode = generator.generate();
+    	// Added Redis ID generator to ensure unique IDs across distributed instances	
+    	long id = redisIdGenerator.getNextId();
+        String shortCode = generator.generate(id);
         UrlMapping mapping = new UrlMapping();
         mapping.setShortCode(shortCode);
         mapping.setLongUrl(longUrl);
         repository.save(mapping);
-        cacheService.put(shortCode, longUrl, CACHE_TTL);
+        try {
+			cacheService.put(shortCode, longUrl, CACHE_TTL);
+		}
+		catch (Exception e) {
+			System.err.println("Connection Disconnected");
+		}
         return shortCode;
     }
 
