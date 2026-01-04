@@ -29,35 +29,18 @@ public class UrlService {
         mapping.setShortCode(shortCode);
         mapping.setLongUrl(longUrl);
         repository.save(mapping);
-        try {
-			cacheService.put(shortCode, longUrl, CACHE_TTL);
-		}
-		catch (Exception e) {
-			System.err.println("Connection Disconnected");
-		}
+		cacheService.put(shortCode, longUrl, CACHE_TTL);
         return shortCode;
     }
 
     public String resolve(String shortCode) {
-    	try {
-	    	String cachedUrl = cacheService.get(shortCode);
-	    	if(cachedUrl!=null) {
-	    		return cachedUrl;
-	    	}
+    	String cachedUrl = cacheService.get(shortCode);
+    	if(cachedUrl!=null) {
+    		return cachedUrl;
     	}
-    	catch (Exception e) {
-			// TODO: handle exception
-    		System.err.println("Connection Disconnected");
-		}
     	UrlMapping mapping = repository.findById(shortCode)
                 .orElseThrow(() -> new RuntimeException("URL not found"));
-    	try {
-    		cacheService.put(shortCode, mapping.getLongUrl(), CACHE_TTL);
-    	}
-    	catch (Exception e) {
-			// TODO: handle exception
-    		System.err.println("Connection Disconnected");
-		}
+		cacheService.put(shortCode, mapping.getLongUrl(), CACHE_TTL);
         return mapping.getLongUrl();
     }
 }

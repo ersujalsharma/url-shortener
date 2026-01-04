@@ -14,13 +14,25 @@ public class RedisCacheService implements CacheService{
 	@Override
 	public String get(String key) {
 		// TODO Auto-generated method stub
-		return redisTemplate.opsForValue().get(key);
+		try {
+			return redisTemplate.opsForValue().get(key);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.err.println("Connection to Redis failed. Caching skipped.");
+			return null;
+		}
 	}
 
 	@Override
 	public void put(String key, String value, Duration ttl) {
 		// TODO Auto-generated method stub
-		redisTemplate.opsForValue().set(key, value, ttl);
+		try {
+			redisTemplate.opsForValue().set(key, value, ttl);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.err.println("Connection to Redis failed. Caching skipped.");
+		}
 	}
 
 }

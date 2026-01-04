@@ -17,6 +17,7 @@ spring:
       host: localhost
       port: 6379
       timeout: 2000
+      connect-timeout: 2000
 #    database-platform: org.hibernate.dialect.MySQL8Dialect
 
 server:
