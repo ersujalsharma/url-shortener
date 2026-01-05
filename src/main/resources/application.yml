@@ -4,10 +4,20 @@ spring:
     username: ${dbusername}
     password: ${dbpassword}
     driver-class-name: com.mysql.cj.jdbc.Driver
-
+#    shard0:
+#      url: jdbc:mysql://localhost:3306/url_shortener
+#      username: ${dbusername}
+#      password: ${dbpassword}
+#      driver-class-name: com.mysql.cj.jdbc.Driver
+#    shard1:
+#      url: jdbc:mysql://localhost:3307/url_shortener
+#      username: ${dbusername}
+#      password: ${dbpassword}
+#      driver-class-name: com.mysql.cj.jdbc.Driver
+#spring:
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
     show-sql: true
     properties:
       hibernate:
@@ -18,6 +28,8 @@ spring:
       port: 6379
       timeout: 2000
       connect-timeout: 2000
+  application:
+    name: Url-Shortener
 #    database-platform: org.hibernate.dialect.MySQL8Dialect
 
 server:
