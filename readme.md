@@ -4,6 +4,9 @@ A **production‑grade, horizontally scalable URL Shortener** built with **Java 
 
 This project focuses on **scalability, performance, resilience, and clean architecture**, and demonstrates how real backend systems are built.
 
+## 🌍 Live Demo
+Swagger UI: http://ec2-13-219-183-180.compute-1.amazonaws.com:8080/swagger-ui/index.html
+
 ---
 
 ## 🚀 Features
