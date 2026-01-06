@@ -18,13 +18,13 @@ public class ShardDataSourceConfig {
         Map<Integer, DataSource> shards = new HashMap<>();
 
         shards.put(0, (DataSource) DataSourceBuilder.create()
-                .url("jdbc:mysql://mysql0:3306/url_shortener")
+                .url("jdbc:mysql://localhost:3306/url_shortener")
                 .username("root")
                 .password("sujal")
                 .build());
 
         shards.put(1, (DataSource) DataSourceBuilder.create()
-                .url("jdbc:mysql://mysql1:3307/url_shortener")
+                .url("jdbc:mysql://localhost:3307/url_shortener")
                 .username("root")
                 .password("sujal")
                 .build());
